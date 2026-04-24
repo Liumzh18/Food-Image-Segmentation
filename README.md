@@ -1,70 +1,70 @@
-# YOLOv8 食物图像实例分割项目
-基于 YOLOv8n-seg 的轻量化食物图像分割方案，实现数据集自动处理、模型训练、评估、推理与一键打包部署
+# YOLOv8 Food Image Instance Segmentation
+A lightweight food image segmentation solution based on YOLOv8n-seg, supporting automated dataset processing, model training, evaluation, inference and one-click deployment.
 
-## 项目简介
-本项目面向计算机视觉实例分割任务，针对食物图像实现**像素级分割**，支持自动环境配置、UECFOODPIXCOMPLETE 数据集加载与校验、掩码格式转换、YOLOv8 模型训练、性能评估、推理可视化及模型打包。项目兼顾精度与推理速度，可直接用于智能餐饮、营养分析等视觉场景。
+## Project Overview
+This project focuses on **pixel-level instance segmentation** for food images as a typical computer vision task. It provides a full pipeline including automatic environment setup, dataset loading & validation, mask format conversion, model training, performance evaluation, result visualization and model packaging. The solution balances accuracy and inference speed, which can be directly applied to smart catering, dietary analysis and other visual scenarios.
 
-## 核心功能
-1. 自动检测并安装项目依赖库，兼容 GPU/CPU 自动切换
-2. 一键加载 UECFOODPIXCOMPLETE 数据集，完成完整性校验与样本预览
-3. 数据集掩码自动转换为 YOLOv8 分割标准格式
-4. 基于 YOLOv8n-seg 轻量化模型训练，支持迁移学习
-5. 自动评估模型指标，绘制训练曲线、可视化分割结果
-6. 模型一键打包，整合权重、配置、日志与使用文档，支持快速部署
+## Core Features
+1. Automatically detect and install project dependencies, supporting auto-switch between GPU and CPU
+2. One-click loading and validation of the UECFOODPIXCOMPLETE dataset with sample preview
+3. Auto-convert dataset masks to the standard YOLOv8 segmentation format
+4. Train lightweight YOLOv8n-seg model with transfer learning
+5. Automatic model evaluation with metric calculation and training curve visualization
+6. One-click model packaging for fast deployment without extra environment configuration
 
-## 环境准备
-运行代码前，确保已安装 Python 环境，项目支持自动安装依赖：
-- 自动安装库：datasets、transformers、torch、pillow、ultralytics、opencv-python、pyyaml
-- 硬件支持：NVIDIA GPU（CUDA）/ CPU 通用
+## Environment Setup
+The project supports automatic dependency installation. Just run the main code, and it will install all required packages:
+- Required libraries: datasets, transformers, torch, pillow, ultralytics, opencv-python, pyyaml
+- Hardware support: NVIDIA GPU (CUDA) / CPU compatible
 
-## 使用步骤
-### 1. 环境与数据集初始化
-运行环境配置代码，自动安装依赖、检测硬件、下载并校验数据集
-自动生成样本预览图，保存数据集基本信息
+## Usage Steps
+### 1. Environment & Dataset Initialization
+Run the environment setup script to install dependencies, check hardware, and download/validate the dataset.
+Sample preview images will be saved automatically.
 
-### 2. 数据集格式转换
-将数据集原始掩码转换为 YOLOv8 标准格式
-自动创建目录结构、提取轮廓、坐标归一化、生成 dataset.yaml
+### 2. Dataset Format Conversion
+Convert raw dataset masks to standard YOLOv8 format.
+The system automatically creates directories, extracts contours, normalizes coordinates, and generates `dataset.yaml`.
 
-### 3. 模型训练
-加载 YOLOv8n-seg 预训练权重
-按配置自动训练，保存最优模型权重 best.pt
+### 3. Model Training
+Load pre-trained YOLOv8n-seg weights and start training automatically.
+The best model weights `best.pt` will be saved after training.
 
-### 4. 模型评估
-在验证集测试标准指标：mAP@50、mAP@50-95、精确率、召回率、F1 分数
-自动生成损失曲线、mAP 曲线、分割预测效果图
+### 4. Model Evaluation
+Test model performance on the validation set with standard computer vision metrics.
+Training loss curves, mAP curves and prediction visualization results are generated automatically.
 
-### 5. 推理与部署
-加载模型完成单张图像实时分割推理
-一键打包模型，输出可直接部署的完整项目包
+### 5. Inference & Deployment
+Load the trained model for real-time food image segmentation.
+Use one-click packaging to export a complete deployable model package.
 
-## 项目文件结构
+## Project Structure
 ```
-项目根目录/
-├── data/                     # 数据集与样本预览图
-├── UECFoodPix_YOLOv8/        # 转换后的YOLOv8格式数据集
-│   ├── images/               # 训练/验证图像
-│   ├── labels/               # 分割标签
-│   └── dataset.yaml          # 数据集配置
-├── runs/                     # 训练日志、评估结果、可视化图
-├── model_packages/           # 打包后的模型文件
-│   ├── models/               # 模型权重
-│   ├── configs/              # 配置文件
-│   ├── training_results/     # 训练结果
-│   └── README.md             # 模型使用说明
-└── 核心代码文件              # 环境配置、数据处理、训练、评估、打包
+Project Root/
+├── data/                     # Dataset and sample preview images
+├── UECFoodPix_YOLOv8/        # YOLOv8 formatted dataset
+│   ├── images/               # Training/validation images
+│   ├── labels/               # Segmentation labels
+│   └── dataset.yaml          # Dataset configuration
+├── runs/                     # Training logs, evaluation results and visualization plots
+├── model_packages/           # Packaged model files
+│   ├── models/               # Model weights
+│   ├── configs/              # Configuration files
+│   ├── training_results/     # Training outputs and metrics
+│   └── README.md             # Model usage documentation
+└── Core Scripts              # Environment setup, data processing, training, evaluation, packaging
 ```
 
-## 关键参数说明
-- 模型：YOLOv8n-seg（轻量化实例分割）
-- 输入尺寸：640×640
-- 训练轮数：100
-- 批次大小：16
-- 评估指标：mask mAP@50=0.9492，mAP@50-95=0.8409
-- 推理速度：单张图像 6–7ms
+## Key Parameters
+- Model: YOLOv8n-seg (lightweight instance segmentation)
+- Input size: 640×640
+- Training epochs: 100
+- Batch size: 16
+- Key metrics: mask mAP@50=0.9492, mAP@50-95=0.8409
+- Inference speed: 6–7 ms per image
 
-## 注意事项
-1. 首次运行会自动下载数据集，需保证网络正常
-2. 数据集转换会过滤面积过小的无效区域，提升训练质量
-3. 模型推理支持本地图像输入，自动输出分割掩码与边界框
-4. 打包后的模型可直接用于部署，无需重新配置环境当前文件内容过长，豆包只阅读了前 42%。
+## Notes
+1. A stable network connection is required for first-run dataset downloading
+2. Small invalid regions are filtered during format conversion to improve training quality
+3. Local image input is supported for inference, with segmentation masks and bounding boxes as output
+4. The packaged model can be deployed directly without reconfiguring the environment
